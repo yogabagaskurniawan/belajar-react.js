@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+		<script src="react-basic.js"></script>
+
+		<!-- Contoh load external library supersimpledev, konsepnya sama seperti dengan react -->
+		<!-- <script src="https://unpkg.com/supersimpledev@3.2.1/external-library.js"></script> -->
+		<script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+		<script>
+			console.log(dayjs().format('MMMM D'));
+		</script>
+
+		<!-- load rect dan react-dom -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+		<!-- load babel compiler untuk mendukung JSX -->
+		<!-- JSX untuk menggunakan sintaks html di dalam JavaScript -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+			// membuat elemen div dengan JSX 
+			// const p = <p>This is a simple React example.</p>;
+			const productCost = 10 + 2 * 8;
+			const shippingCost = 5;
+			const totalCost = productCost + shippingCost;
+
+			const today = dayjs().format('MMMM D')
+
+			console.log("Total cost:", productCost);
+			const container = document.querySelector('.js-container');
+			// ReactDOM.createRoot(container).render(div);
+      const root = ReactDOM.createRoot(container);
+			
+			setInterval(() => {
+				const curentTime = dayjs().format('HH:mm:ss')
+				const div = (
+					<div>
+						<h1>Hello, React!</h1>
+						<p>This is a simple React example.</p>
+						<p>Contoh penjumlahan dengan React: {2 + 3}</p>
+						<hr />
+
+						<p>Latihan</p>
+						<button>Good joob!</button>
+						<p>My name is Bagas</p>
+						<h2>Catton socks</h2>
+						<p>Price: $10</p>
+						<button>Add to Cart</button>
+						<h4>Product Cost: ${productCost}</h4>
+						<h4>Shipping Cost: ${shippingCost}</h4>
+						<h3>Total Cost: ${totalCost}</h3>
+						<button>Place your order</button>
+
+						<h1>Today is {today}</h1>
+						<h2>Current time: {curentTime}</h2>
+					</div>
+				)
+				root.render(div);
+			}, 1000);
+    </script>
+  </body>
+</html>

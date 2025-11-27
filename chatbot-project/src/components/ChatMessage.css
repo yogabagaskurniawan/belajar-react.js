@@ -1,0 +1,32 @@
+.user-message {
+  display: flex;
+  justify-content: flex-end;
+  align-items: start;
+}
+.user-message img, .robot-message img {
+  width: 40px;
+}
+.user-message img{
+  height: 45px;
+  border-radius: 45px;
+  object-fit: cover;
+}
+.robot-message {
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  margin-bottom: 20px;
+}
+.chat-message-box {
+  max-width: 300px;
+  padding: 12px 16px;
+  margin: 0px 8px 8px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+}
+.chat-message-time {
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+  text-align: right;
+}

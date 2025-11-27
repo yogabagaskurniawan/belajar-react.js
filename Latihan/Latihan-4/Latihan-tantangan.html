@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+			}
+			.container-app{
+				display: flex;
+				flex-direction: column;
+				margin: 0 auto;
+				height: 100vh;
+				align-items: center;
+				justify-content: center;
+				background-color: rgb(222, 222, 222);
+			}
+			.btn-submit{
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 5px;
+				cursor: pointer;
+				background-color: rgb(0, 123, 255);
+				margin-right: 5px;
+				font-size: 14px;
+				margin-top: 10px;
+			}
+			.inputEmail, .inputPassword{
+				padding: 8px 12px;
+				border-radius: 5px;
+				font-size: 14px;
+				border: 2px solid #ccc;
+				width: 250px;
+				margin-bottom: 10px;
+			}
+			.inputPassword{
+				margin-right: 10px;
+			}
+			.button-click{
+				margin-top: 20px;
+			}
+			.button-click button {
+				margin-right: 10px;
+				padding: 8px 16px;
+				font-size: 14px;
+				border-radius: 5px;
+				border: none;
+				cursor: pointer;
+				background-color: rgb(25, 135, 84);
+				color: white;
+			}
+		</style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+		<!-- load rect dan react-dom -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+		<script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+		
+		<!-- load babel compiler untuk mendukung JSX -->
+		<!-- JSX untuk menggunakan sintaks html di dalam JavaScript -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+			const container = document.querySelector('.js-container');
+
+			function LoginForm() {
+				const [showPassword, setShowPassword] = React.useState(false);
+
+				function btnShowPassword() {
+					// setShowPassword(!showPassword);
+					if (showPassword) {
+						setShowPassword(false);
+					} else {
+						setShowPassword(true);
+					}
+				}
+				return (
+					<>
+						<div>
+							<input className="inputEmail" type="email" placeholder="Email" />
+						</div>
+						<div>
+							<input className="inputPassword" type={showPassword ? 'text' : 'password'} placeholder="Password" />
+							<button onClick={btnShowPassword}>{showPassword ? 'Hide' : 'Show'}</button>
+						</div>
+						<div>
+							<button className="btn-submit">Login</button>
+							<button className="btn-submit">Sign Up</button>
+						</div>
+					</>
+				)
+			}
+
+      function App() {
+
+				const [curentTime, setCurentTime] = React.useState(dayjs().format('HH:mm:ss'));
+				const [number, setNumber] = React.useState(0);
+				const numberRef = React.useRef(null);
+				
+				React.useEffect(() => {
+					setInterval(() => {
+						setCurentTime(dayjs().format('HH:mm:ss'));
+						console.log('run code');
+					}, 1000);
+				}, []);
+
+				function timesBtn() {
+          setNumber(number + 1);
+        }
+				
+				function reset() {
+					setNumber(0);
+        }
+
+				function autoClick() {
+					setInterval(() => {
+						const btnElement = numberRef.current;
+						if (btnElement) {
+							btnElement.click();
+						}
+					}, 1000);
+				}
+				
+				return (
+					<div className="container-app">
+						<h1>Hello, welcome to my website</h1>
+						<h2>Current time: {curentTime}</h2>
+						
+						<LoginForm />
+
+						<div className="button-click">
+							<button ref={numberRef} onClick={timesBtn}>
+								Clicked {number} {number === 1 ? 'time' : 'times'}
+							</button>
+							<button onClick={reset}>Reset</button>
+							<button onClick={autoClick}>Auto Click</button>
+						</div>
+					</div>
+				)
+			}
+      const root = ReactDOM.createRoot(container);
+			root.render(<App />);
+    </script>
+  </body>
+</html>

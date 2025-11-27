@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+		<!-- load rect dan react-dom -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+		
+		<!-- load babel compiler untuk mendukung JSX -->
+		<!-- JSX untuk menggunakan sintaks html di dalam JavaScript -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+			const container = document.querySelector('.js-container');
+
+      function App() {
+        const [inputValue, setInputValue] = React.useState('');
+        function textInput(event) {
+          // console.log(event.target.value);
+          setInputValue(event.target.value);
+        }
+        function reset() {
+          setInputValue('');
+        }
+        function example() {
+          setInputValue('John Doe');
+        }
+				return (
+					<>
+            <input type="text" onChange={textInput} value={inputValue} placeholder="Type your name" />
+            <button onClick={reset}>Reset</button>
+            <button onClick={example}>Example</button>
+            <p>Hello {inputValue}</p>
+					</>
+				)
+			}
+      const root = ReactDOM.createRoot(container);
+			root.render(<App />);
+    </script>
+  </body>
+</html>

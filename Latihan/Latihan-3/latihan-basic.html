@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+		<!-- load rect dan react-dom -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+		
+		<!-- load babel compiler untuk mendukung JSX -->
+		<!-- JSX untuk menggunakan sintaks html di dalam JavaScript -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+			const container = document.querySelector('.js-container');
+
+      function Button({number, setNumber, reset}) {
+        // local state
+        // const [number, setNumber] = React.useState(0);
+        function timesBtn() {
+          setNumber(number + 1);
+        }
+        return (
+          <>
+            <button onClick={timesBtn}>
+              Clicked {number} {number === 1 ? 'time' : 'times'}
+            </button>
+          </>
+        )
+      }
+
+      function App() {
+        // global state
+        const [number, setNumber] = React.useState(0);
+        function reset() {
+          setNumber(0);
+        }
+
+				return (
+					<>
+            <Button number={number} setNumber={setNumber} />
+            <Button number={number} setNumber={setNumber} />
+            <button onClick={reset}>Reset</button>
+					</>
+				)
+			}
+      const root = ReactDOM.createRoot(container);
+			root.render(<App />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+		<!-- load rect dan react-dom -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+		<!-- load babel compiler untuk mendukung JSX -->
+		<!-- JSX untuk menggunakan sintaks html di dalam JavaScript -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+			const container = document.querySelector('.js-container');
+
+      function LoginForm () {
+        return (
+          <>
+            <div>
+              <input type="text" placeholder="Email" />
+            </div>
+            <div>
+              <input type="password" placeholder="Password" />
+            </div>
+            <button>Login</button>
+            <button>Sign Up</button>
+          </>
+        )
+      }
+
+			function App() {
+				return (
+					<>
+            <p>Hello, welcome to my website</p>
+            <LoginForm />
+					</>
+				)
+			}
+      const root = ReactDOM.createRoot(container);
+			root.render(<App />);
+    </script>
+  </body>
+</html>

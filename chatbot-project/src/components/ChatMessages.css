@@ -1,0 +1,10 @@
+.title {
+  margin-top: 0px;
+  text-align: center;
+}
+.chat-messages-container{
+  flex-grow: 1;
+  margin-top: 30px;
+  overflow: scroll;
+  scrollbar-width: none;
+}

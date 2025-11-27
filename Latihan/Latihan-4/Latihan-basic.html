@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+		<style>
+			.container-app{
+				display: flex;
+				justify-content: end;
+			}
+			.btn {
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+			.btn-green{
+				background-color: rgb(25, 135, 84);
+			}
+			.btn-red{
+				background-color: rgb(220, 53, 69);
+			}
+		</style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+		<!-- load rect dan react-dom -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+		
+		<!-- load babel compiler untuk mendukung JSX -->
+		<!-- JSX untuk menggunakan sintaks html di dalam JavaScript -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+			const container = document.querySelector('.js-container');
+
+      function App() {
+				const [isButtonOn, setIsButtonOn] = React.useState(false);
+				function buttonOn() {
+					// setIsButtonOn(!isButtonOn);
+					if (isButtonOn) {
+						setIsButtonOn(false);
+					} else {
+						setIsButtonOn(true);
+					}
+				}
+				return (
+					<div className="container-app">
+            <button 
+							onClick={buttonOn}
+							className={isButtonOn ? 'btn btn-green' : 'btn btn-red'}
+						>
+							{isButtonOn ? 'ON' : 'OFF'}
+						</button>
+					</div>
+				)
+			}
+      const root = ReactDOM.createRoot(container);
+			root.render(<App />);
+    </script>
+  </body>
+</html>

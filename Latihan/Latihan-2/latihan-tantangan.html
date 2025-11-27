@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+		<!-- load rect dan react-dom -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+		<!-- load babel compiler untuk mendukung JSX -->
+		<!-- JSX untuk menggunakan sintaks html di dalam JavaScript -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+			const container = document.querySelector('.js-container');
+
+      /* 
+        Conditional rendering menggunakan ternary operator
+        cons discount = true maka tampilkan harga diskon jika false tampilkan harga normal
+        const result = condition ? valueIfTrue : valueIfFalse
+      */
+      function ProductDetail({nameProduct, price, discount, imagesrc}) {
+        return (
+          <>
+            <div>
+              <img src={imagesrc} width="200" />
+            </div>
+            <p>{nameProduct}</p>
+            {discount ? (
+              <>
+                <p>
+                  Price: <s>${price}</s>
+                </p>
+                <p>
+                  Discount Price: ${discount}
+                </p>
+              </>
+            ) : (
+              <p>Price: ${price}</p>
+            )}
+            <button>Add To Cart</button>
+          </>
+        )
+      }
+
+      function App () {
+        return (
+          <>
+            <ProductDetail nameProduct="Cotton Socks" price="10.90" discount="5.45" imagesrc="/Latihan/Latihan-2/cotton-socks.png"/>
+            <ProductDetail nameProduct="Tenis Bals" price="6.00" imagesrc="/Latihan/Latihan-2/tennis-balls.png" />
+            <ProductDetail nameProduct="Plain T-Shirt" price="7.99" imagesrc="/Latihan/Latihan-2/plain-t-shirt.png" />
+          </>
+        )
+      }
+
+      const root = ReactDOM.createRoot(container);
+			root.render(<App />);
+    </script>
+  </body>
+</html>

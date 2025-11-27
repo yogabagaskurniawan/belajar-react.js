@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+        margin-top: 0%;
+        margin-bottom: 0%;
+			}
+			.container-app{
+				max-width: 600px;
+				margin: 0 auto;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+			}
+			.title {
+				margin-top: 0px;
+				text-align: center;
+			}
+			.chat-input-container {
+				display: flex;
+				margin-bottom: 60px;
+			}
+			.chat-input {
+				flex: 1;
+				font-size: 14px;
+				padding: 12px 14px;
+				border-radius: 12px;
+				border: 2px solid #ccc;
+			}
+			.chat-send-button {
+				font-size: 14px;
+				padding: 12px 20px;
+				border-radius: 12px;
+				margin-left: 8px;
+				cursor: pointer;
+				border: none;
+				color: white;
+				background-color: rgb(72, 232, 178);
+			}
+			.user-message {
+				display: flex;
+				justify-content: flex-end;
+				align-items: start;
+			}
+			.user-message img, .robot-message img {
+				width: 40px;
+			}
+			.robot-message {
+				display: flex;
+				justify-content: flex-start;
+				align-items: start;
+        margin-bottom: 20px;
+			}
+			.chat-message-box {
+				max-width: 300px;
+				padding: 12px 16px;
+				margin: 0px 8px 8px;
+				border-radius: 10px;
+				background-color: #f0f0f0;
+			}
+      .chat-messages-container{
+        flex-grow: 1;
+        margin-top: 30px;
+        overflow: scroll;
+        scrollbar-width: none;
+      }
+			.img-loading {
+				width: 40px;
+				margin: -15px 0;
+			}
+		</style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+		<script src="react-basic.js"></script>
+
+		<!-- load rect dan react-dom -->
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+		
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+		<!-- load babel compiler untuk mendukung JSX -->
+		<!-- JSX untuk menggunakan sintaks html di dalam JavaScript -->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+			const container = document.querySelector('.js-container');
+
+			function InputChat({chatMessages, setChatMessages, isLoading, setIsLoading}) {
+				const [inputValue, setInputValue] = React.useState('');
+
+				function textInput(event) {
+					// console.log(event.target.value);
+					setInputValue(event.target.value);
+				}
+
+        // async await digunakan untuk menangani operasi asynchronous
+        // asynchronous artinya operasi yang tidak berjalan secara berurutan
+        // misalnya mengambil data dari server yang memerlukan waktu
+				async function sendMessage() {
+					// alert("You sent: " + inputValue);
+					setInputValue('');
+					if (inputValue.trim() === '' || isLoading) {
+						return;
+					}
+					setIsLoading(true);
+					const newChatMessages = [
+						...chatMessages,
+						{
+							message: inputValue,
+							role: "user",
+							id: crypto.randomUUID()
+						}
+					]
+					// setChatMessages(newChatMessages);
+          setChatMessages([
+						...newChatMessages,
+						{
+							message: <img className="img-loading" src="loading-spinner.gif" />,
+							role: "robot",
+							id: crypto.randomUUID(),
+						}
+					]);
+
+					// const response = Chatbot.getResponse(inputValue);
+					const response = await Chatbot.getResponseAsync(inputValue);
+					setChatMessages([
+						...newChatMessages,
+						{
+							message: response,
+							role: "robot",
+							id: crypto.randomUUID(),
+						}
+					]);
+					// setInputValue('');
+					setIsLoading(false);
+				}
+
+				function handleKeyDown(event) {
+					if (event.key === 'Enter') {
+						sendMessage();
+					} else if (event.key === 'Escape') {
+						setInputValue('');
+					}
+				}
+
+				return (
+					<div className="chat-input-container">
+						<input 
+							type="text" 
+							onChange={textInput} 
+							value={inputValue} 
+							placeholder="Send a message to Chatbot" 
+							size="30" 
+							onKeyDown={handleKeyDown}
+							className="chat-input" 
+						/>
+						<button 
+							onClick={sendMessage}
+							className="chat-send-button"
+						>Send
+						</button>
+					</div>
+				);
+			}
+
+			function ChatInput({message, role}) {
+				// const message = props.message;
+				// const role = props.role;
+				// const {message, role} = props;
+
+				/*
+				if (role === 'robot') {
+					return (
+						<div>
+							<img src="robot.png" width="50" />
+							{message}
+						</div>
+					);
+				}
+				*/
+
+				// Guard operator (&&)
+				// jika role === 'robot' bernilai true, maka bagian setelah && akan dieksekusi
+				return (
+					<div className={(role === 'user') ? 'user-message' : 'robot-message'}>
+						{(role === 'robot') && <img src="robot.png" />}
+						<div className="chat-message-box">
+							{message}
+						</div>
+						{(role === 'user') && <img src="user.png" />}
+					</div>
+				);
+			}
+
+			//function ChatMessages({chatMessages}) {
+        // useRef untuk mendapatkan referensi elemen DOM
+        // const chatMessageRef = React.useRef(null);
+			function useAutoScroll(dependencies) {
+				const containerRef = React.useRef(null);
+        // useEffect untuk menjalankan efek samping setelah render
+        React.useEffect(() => {
+          // console.log('updated');
+          // console.log(chatMessageRef.current);
+          // const chatMessagesElem = chatMessageRef.current;
+					const chatMessagesElem = containerRef.current;
+          if (chatMessagesElem) {
+            chatMessagesElem.scrollTop = chatMessagesElem.scrollHeight;
+          }
+        }, dependencies);
+				return containerRef;
+			}
+			
+			function ChatMessages({ chatMessages }) {
+        const chatMessageRef = useAutoScroll([chatMessages]);
+				return (
+					<div ref={chatMessageRef} className="chat-messages-container">
+						{(chatMessages.length === 0) && <p className="title">Welcome to the chatbot project! Send a message using the textbox below</p>}
+						{chatMessages.map((chatMessage) => (
+							<ChatInput 
+                message={chatMessage.message} 
+                role={chatMessage.role} 
+                key={chatMessage.id} 
+							/>
+						))}
+          </div>
+				)
+			}
+
+			function App() {
+        // useState untuk menyimpan state chatMessages
+				const [chatMessages, setChatMessages] = React.useState([
+					/*{
+						message: "Hello chatbot",
+						role: "user",
+						id: 'id1'
+					},
+					{
+						message: "Hello! how can I help you?",
+						role: "robot",
+						id: 'id2'
+					},
+					{
+						message: "Can you get me today date?",
+						role: "user",
+						id: 'id3'
+					},
+					{
+						message: "Today is November 21",
+						role: "robot",
+						id: 'id4'
+					}*/
+				]);
+				const [isLoading, setIsLoading] = React.useState(false);
+				return (
+					<div className="container-app">
+						<ChatMessages chatMessages={chatMessages} />
+						<InputChat chatMessages={chatMessages} setChatMessages={setChatMessages} isLoading={isLoading} setIsLoading={setIsLoading} />
+					</div>
+				)
+			}
+      const root = ReactDOM.createRoot(container);
+			root.render(<App />);
+    </script>
+  </body>
+</html>
