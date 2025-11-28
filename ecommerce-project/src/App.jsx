@@ -1,9 +1,9 @@
 import './App.css'
+// https://reactrouter.com/7.8.0/start/declarative/routing
 import { Routes, Route } from 'react-router'
-import { HomePage } from './pages/HomePage.jsx'
-import { OrdersPage } from './pages/OrdersPage.jsx'
-import { Checkout } from './pages/Checkout.jsx'
-
+import { HomePage } from './pages/HomePage/HomePage.jsx'
+import { OrdersPage } from './pages/OrdersPage/OrdersPage.jsx'
+import { Checkout } from './pages/checkout/Checkout.jsx'
 function App() {
   return (
     <>
