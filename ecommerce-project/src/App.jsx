@@ -4,6 +4,9 @@ import { Routes, Route } from 'react-router'
 import { HomePage } from './pages/HomePage/HomePage.jsx'
 import { OrdersPage } from './pages/OrdersPage/OrdersPage.jsx'
 import { Checkout } from './pages/checkout/Checkout.jsx'
+import { Tracking } from './pages/Tracking/Tracking.jsx'
+import { NotFound } from './pages/NotFound.jsx'
+
 function App() {
   return (
     <>
@@ -11,6 +14,8 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/tracking" element={<Tracking />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )
