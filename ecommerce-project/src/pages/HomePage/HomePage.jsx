@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './HomePage.css'
 import { Header } from '../../components/Header'
@@ -10,7 +10,7 @@ export function HomePage({carts}) {
 
   useEffect(() => {
     axios.get('/api/products')
-      .then(response => {
+      .then((response) => {
         setProducts(response.data);
       })
   }, [])
