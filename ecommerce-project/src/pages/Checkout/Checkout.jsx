@@ -16,6 +16,9 @@ export function Checkout({carts}) {
         
       response = await axios.get('/api/payment-summary')
       setPaymentSummary(response.data);
+      
+      // console.log(response);
+      
     }
     fetchCheckoutData()
   }, [])
