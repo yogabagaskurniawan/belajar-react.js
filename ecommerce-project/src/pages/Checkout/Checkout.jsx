@@ -6,7 +6,7 @@ import { OrderSummary } from './OrderSummary.jsx';
 import { PaymentSummary } from './PaymentSummary.jsx';
 
 
-export function Checkout({carts}) {  
+export function Checkout({carts, loadCartData}) {  
   const [deliveryOptions, setDeliveryOptions] = useState([])
   const [paymentSummary, setPaymentSummary] = useState(null)
   useEffect(() => {
@@ -21,7 +21,7 @@ export function Checkout({carts}) {
       
     }
     fetchCheckoutData()
-  }, [])
+  }, [carts])
   
   return (
     <>
@@ -32,7 +32,7 @@ export function Checkout({carts}) {
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
-          <OrderSummary deliveryOptions={deliveryOptions} carts={carts} />
+          <OrderSummary deliveryOptions={deliveryOptions} carts={carts} loadCartData={loadCartData}/>
 
           <PaymentSummary paymentSummary={paymentSummary} />
         </div>
