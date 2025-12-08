@@ -8,7 +8,15 @@ import carticon from '../assets/images/icons/cart-icon.png'
 import searchIcon from '../assets/images/icons/search-icon.png'
 import { useState } from 'react'
 
-export function Header ({carts}) {
+type HeaderProps = {
+  carts: {
+    productId: string
+    quantity: number
+    deliveryOptionId: string
+  }[]
+}
+
+export function Header ({carts}: HeaderProps) {
   const [searchParams] = useSearchParams();
   
   const searchText = searchParams.get('search');
@@ -21,7 +29,7 @@ export function Header ({carts}) {
     totalQuantity += cart.quantity
   });
   
-  const inputValue = (event) => {
+  const inputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);    
   }
 
